@@ -137,7 +137,7 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public" {
-  count = local.create_public_subnets && local.vpn_name != "vpn" ?  local.len_public_subnets : 0
+  count = local.create_public_subnets && var.name != "vpn" ?  local.len_public_subnets : 0
 
   subnet_id      = element(aws_subnet.public[*].id, count.index)
   route_table_id = aws_route_table.public[0].id
@@ -269,7 +269,7 @@ resource "aws_route_table" "private" {
 }
 
 resource "aws_route_table_association" "private" {
-  count = local.create_private_subnets && local.vpn_name != "vpn" ? local.len_private_subnets : 0
+  count = local.create_private_subnets && var.name != "vpn" ? local.len_private_subnets : 0
 
   subnet_id = element(aws_subnet.private[*].id, count.index)
   route_table_id = element(
